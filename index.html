@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
+
+    <title>HTML 5 Whiteboard</title>
+    <link rel="stylesheet" type="text/css" href="reset.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+	<script src="js/libs/jquery-1.4.2.min.js" type="application/javascript"></script>
+	<script src="js/libs/jquery-ui-1.8.custom.min.js" type="application/javascript"></script>
+	<script src="js/bundle.js"> </script>
+	<script src="js/libs/console.js" type="application/javascript"></script>
+	<script src="js/libs/base64.js" type="application/javascript"></script>
+	<script src="js/libs/canvas2image.js" type="application/javascript"></script>
+	<script src="js/whiteboard.js" type="application/javascript"></script>
+	<script src="js/whiteboardui.jquery.js" type="application/javascript"></script>
+
+
+
+
+<script type="text/javascript">//<![CDATA[
+
+var ctx, color = "#000";
+
+// Init the script after document ready
+$(document).ready(function(){
+
+// setup a new canvas for drawing wait for device init
+    setTimeout(function(){
+	  //newCanvas();
+    }, 1000);
+
+	// reset palette selection (css) and select the clicked color for canvas strokeStyle
+	$(".palette").click(function(){
+		$(".palette").css("border-color", "#777");
+		$(".palette").css("border-style", "solid");
+		$(this).css("border-color", "#fff");
+		$(this).css("border-style", "dashed");
+		color = $(this).css("background-color");
+		ctx.beginPath();
+		ctx.strokeStyle = color;
+	});
+
+	// link the new button with newCanvas() function
+	$("#new").click(function() {
+		//newCanvas();
+	});
+
+
+
+	WhiteboardUi.init($("#canvas"));
+
+
+});
+
+// function to setup a new canvas for drawing
+function newCanvas(){
+	//define and resize canvas
+    $("#content").height($(window).height()-90);
+    var canvas = '<canvas id="canvas" width="'+$(window).width()+'" height="'+($(window).height()-90)+'"></canvas>';
+	$("#content").html(canvas);
+
+    // setup canvas
+	ctx=document.getElementById("canvas").getContext("2d");
+	ctx.strokeStyle = color;
+	ctx.lineWidth = 5;
+
+	// setup to trigger drawing on mouse or touch
+	//$("#canvas").drawTouch();
+
+}
+
+
+//]]></script>
+</head>
+<body>
+
+<div id="page">
+    <div class="header">
+		<!--<a id="new" class="navbtn">New</a>-->
+<a id="button_pencil" id="drawpolyline" class="navbtn" style="float:left">Freehand</a>
+        <a id="button_animate" class="navbtn" style="float:left">Replay</a>
+        <a id="clear_all" class="navbtn" style="float:left">Clear All</a>
+
+        <div class="title" >Sketch Pad</div>
+    </div>
+    <div id="content">
+    <!--<p id='loading' style="text-align:center">Loading Canvas...</p>-->
+    	<canvas id="canvas" width="" height=""></canvas>
+    	</div>
+    <div class="footer">
+		<div class="palette-case">
+		<!--
+			<div class="palette-box">
+				<div class="palette white"></div>
+			</div>
+			<div class="palette-box">
+				<div class="palette red"></div>
+			</div>
+			<div class="palette-box">
+				<div class="palette blue"></div>
+			</div>
+			<div class="palette-box">
+				<div class="palette green"></div>
+			</div>
+			<div class="palette-box">
+				<div class="palette black"></div>
+			</div>
+			-->
+			<div style="clear:both"></div>
+		</div>
+    </div>
+</div>
+</body>
+</html>
+
